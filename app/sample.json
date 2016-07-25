@@ -1,0 +1,335 @@
+{
+	"CloudloaderScript": {
+		"ScriptSetting": {
+			"PostponedUpdateAllowed": "false",
+			"PostponedUpdateMaxTries": "30000",
+			"PostponedUpdateForceUpdateDate": "9999-12-31T23:59:59.9999999",
+			"PostponedUpdateMessage": "There are T-Plan 7.5 updates available, would you like to download the latest version? Click Yes to download the updates now or click No to open T-Plan 7.5 and update later.",
+			"SkinFile": {
+				"-SkipChecksum": "false",
+				"LocalPath": "%DefaultDir%\\AppAccelerator.clskin",
+				"ServerPath": "%GUID%/AppAccelerator.clskin"
+			},
+			"InitialVariables": {
+				"Variable": {
+					"-Name": "appname",
+					"-Value": "T-Plan 7.5"
+				}
+			}
+		},
+		"Actions": {
+			"ImportAction": [{
+				"-Id": "ImportUpdateAA",
+				"-UserMessage": "Downloading !appname!",
+				"File": {
+					"-SkipChecksum": "false",
+					"LocalPath": "%DefaultDir%\\UpdateAA.clc",
+					"ServerPath": "%GUID%/UpdateAA.clc"
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "EndImportUpdateCloudloader",
+						"-ResultAction": "FileSyncAAV"
+					}
+				}
+			},
+			{
+				"-Id": "ImportT-Plan_7.5",
+				"-UserMessage": "Downloading !appname!",
+				"File": {
+					"-SkipChecksum": "false",
+					"LocalPath": "%DefaultDir%\\T-Plan_7.5.clc",
+					"ServerPath": "%GUID%/T-Plan_7.5.clc"
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "EndImportT-Plan_7.5",
+						"-ResultAction": "ImportNet35"
+					}
+				}
+			},
+			{
+				"-Id": "ImportNet35",
+				"-UserMessage": "Downloading !appname!",
+				"File": {
+					"-SkipChecksum": "false",
+					"LocalPath": "%DefaultDir%\\Net35.clc",
+					"ServerPath": "%GUID%/Net35.clc"
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "EndImportNet35",
+						"-ResultAction": "ImportNet4"
+					}
+				}
+			},
+			{
+				"-Id": "ImportNet4",
+				"-UserMessage": "Downloading !appname!",
+				"File": {
+					"-SkipChecksum": "false",
+					"LocalPath": "%DefaultDir%\\Net4.clc",
+					"ServerPath": "%GUID%/Net4.clc"
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "EndImportNet4",
+						"-ResultAction": "CheckCompany"
+					}
+				}
+			},
+			{
+				"-Id": "ImportDllUpdate",
+				"-UserMessage": "Downloading Data Accelerator",
+				"File": {
+					"-SkipChecksum": "false",
+					"LocalPath": "%DefaultDir%\\ImportDllUpdate.clc",
+					"ServerPath": "%GUID%/ImportDllUpdate.clc"
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "EndImportDllUpdate",
+						"-ResultAction": "ReplaceAdminImp"
+					}
+				}
+			},
+			{
+				"-Id": "ImportJiraPatch",
+				"-UserMessage": "Downloading !appname!",
+				"File": {
+					"-SkipChecksum": "false",
+					"LocalPath": "%DefaultDir%\\JiraPatch.clc",
+					"ServerPath": "%GUID%/JiraPatch.clc"
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "EndImportJiraPatch",
+						"-ResultAction": "ImportDA"
+					}
+				}
+			},
+			{
+				"-Id": "ImportDA",
+				"-UserMessage": "Downloading !appname!",
+				"File": {
+					"-SkipChecksum": "false",
+					"LocalPath": "%DefaultDir%\\DataAnywhere5.clc",
+					"ServerPath": {
+						"-AlternateAppId": "DataAnywhereRelease",
+						"#text": "!DAVersion!\\DataAnywhere5.clc"
+					}
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "EndImportDA",
+						"-ResultAction": "RunApp",
+						"-EndScript": "false"
+					}
+				}
+			},
+			{
+				"-Id": "ImportUninstallT-Plan_7.5",
+				"-UserMessage": "Downloading !appname!",
+				"File": {
+					"-SkipChecksum": "false",
+					"LocalPath": "%DefaultDir%\\UninstallT-Plan_7.5.clc",
+					"ServerPath": "%GUID%/UninstallT-Plan_7.5.clc"
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "EndImportUninstallT-Plan_7.5",
+						"-ResultAction": "UninstallNet35"
+					}
+				}
+			}],
+			"SyncFilesAction": {
+				"-Id": "FileSyncAAV",
+				"-UserMessage": "Downloading App Accelerator",
+				"Files": {
+					"File": [{
+						"-SkipChecksum": "false",
+						"ServerPath": "%GUID%/AppAcceleratorV_%6432%.exe.clz",
+						"LocalPath": "%DefaultDir%\\AppAcceleratorV.exe.clz"
+					},
+					{
+						"-SkipChecksum": "false",
+						"ServerPath": "%GUID%/AppAcceleratorV.clc",
+						"LocalPath": "%DefaultDir%\\AppAcceleratorV.clc"
+					},
+					{
+						"-SkipChecksum": "false",
+						"ServerPath": "%GUID%/AppAcceleratorM.exe.clz",
+						"LocalPath": "%DefaultDir%\\AppAcceleratorM.exe.clz"
+					}]
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "*",
+						"-ResultAction": "ImportT-Plan_7.5",
+						"-EndScript": "false"
+					}
+				}
+			},
+			"GetVariableAction": {
+				"-Id": "CheckCompany",
+				"-UserMessage": "Starting Data Accelerator",
+				"VariableName": "!CompanyName!",
+				"Results": {
+					"Result": [{
+						"-ResultText": "Imperial College",
+						"-ResultAction": "ImportDllUpdate",
+						"-EndScript": "false"
+					},
+					{
+						"-ResultText": "EJEPE",
+						"-ResultAction": "ReplaceAdminImp",
+						"-EndScript": "false"
+					},
+					{
+						"-ResultText": "*",
+						"-ResultAction": "CheckJiraPatchApplied",
+						"-EndScript": "false"
+					}]
+				}
+			},
+			"ReplaceFileTextAction": {
+				"-Id": "ReplaceAdminImp",
+				"-UserMessage": "Configuring Data Accelerator",
+				"SourceFile": "%DefaultDir%\\ProgData\\ProgramData\\T-Plan\\Evaluation\\admin.xml.base",
+				"DestinationFile": "%DefaultDir%\\ProgData\\ProgramData\\T-Plan\\Evaluation\\admin.xml",
+				"ReplaceRules": {
+					"ReplaceRule": [{
+						"-CaseSensitive": "false",
+						"-From": "%NewConnectionString%",
+						"-To": "!NewConnectionString!"
+					},
+					{
+						"-CaseSensitive": "false",
+						"-From": "%SecurityTag%",
+						"-To": "!SecurityTag!"
+					}]
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "*",
+						"-ResultAction": "RunApp",
+						"-EndScript": "false"
+					}
+				}
+			},
+			"RecordOperationAction": {
+				"-Id": "CheckJiraPatchApplied",
+				"-UserMessage": "Configuring !appname!",
+				"Operation": "JiraUpdateExtracted",
+				"Task": "Query",
+				"Results": {
+					"Result": [{
+						"-ResultText": "Found",
+						"-ResultAction": "ImportDA"
+					},
+					{
+						"-ResultText": "NotFound",
+						"-ResultAction": "ImportJiraPatch"
+					}]
+				}
+			},
+			"RunProgramsAction": {
+				"-Id": "RunApp",
+				"-UserMessage": "Starting !appname!",
+				"Programs": {
+					"Program": [{
+						"Path": "\"%DefaultDir%\\AppAcceleratorV.exe\"",
+						"Args": "/f \"%DefaultDir%\\ProgData\\Program Files (x86)\\T-Plan\\apps\\TPlan32.exe\"",
+						"WorkingDirectory": "%DefaultDir%\\ProgData\\Program Files (x86)\\T-Plan\\apps",
+						"RunCondition": "Initial",
+						"WaitUntilCondition": "None",
+						"LicenseUri": "%AppStoreUrl%/API/AALicensingService.svc"
+					},
+					{
+						"Path": "\"%DefaultDir%\\AppAcceleratorV.exe\"",
+						"Args": "%FILEARGS%",
+						"RunCondition": "Fallback",
+						"WaitUntilCondition": "None",
+						"LicenseUri": "%AppStoreUrl%/API/AALicensingService.svc"
+					}]
+				},
+				"Results": {
+					"Result": [{
+						"-ResultText": "Success",
+						"-EndScript": "true"
+					},
+					{
+						"-ResultText": "*",
+						"-ResultAction": "InvalidLicense",
+						"-EndScript": "false"
+					}]
+				}
+			},
+			"ShowUserDialogAction": [{
+				"-Id": "InvalidLicense",
+				"-UserMessage": "Invalid License",
+				"Dialog": {
+					"Title": "Invalid License",
+					"Message": "There are no valid licenses available.",
+					"Buttons": "OK",
+					"Icon": "Warning"
+				}
+			},
+			{
+				"-Id": "UninstallPrompt",
+				"-UserMessage": "Are you sure you want to uninstall !appname!?",
+				"Dialog": {
+					"Title": "T-Plan 7.5 powered by Cloudhouse",
+					"Message": "Are you sure you want to uninstall T-Plan 7.5?",
+					"Buttons": "YesNo",
+					"Icon": "Warning"
+				},
+				"Results": {
+					"Result": {
+						"-ResultText": "Yes",
+						"-ResultAction": "CheckT-Plan_7.5RunningUninstall"
+					}
+				}
+			},
+			{
+				"-Id": "AlredayRunningErrorUninstall",
+				"-UserMessage": "Uninstalling !appname!",
+				"Dialog": {
+					"Title": "T-Plan 7.5 is already running",
+					"Message": "T-Plan 7.5 is currently running.\nPlease ensure that all work has been saved and all copies of T-Plan 7.5 are shut before continuing.\nAre you sure you want to uninstall T-Plan 7.5?",
+					"Buttons": "YesNo",
+					"Icon": "Warning"
+				}
+			}],
+			"IsProcessRunningAction": {
+				"-Id": "CheckT-Plan_7.5RunningUninstall",
+				"-UserMessage": "Uninstalling !appname!",
+				"ProcessName": "%DefaultDir%\\ProgData\\Program Files (x86)\\T-Plan\\apps\\TPlan32.exe",
+				"Results": {
+					"Result": [{
+						"-ResultText": "NotRunning",
+						"-ResultAction": "ImportUninstallT-Plan_7.5",
+						"-EndScript": "false"
+					},
+					{
+						"-ResultText": "Running",
+						"-ResultAction": "AlredayRunningErrorUninstall",
+						"-EndScript": "false"
+					}]
+				}
+			},
+			"KillProcessAction": {
+				"-Id": "KillT-Plan_7.5Uninstall",
+				"-UserMessage": "Uninstalling !appname!",
+				"ProcessName": "%DefaultDir%\\ProgData\\Program Files (x86)\\T-Plan\\apps\\TPlan32.exe",
+				"Results": {
+					"Result": {
+						"-ResultText": "*",
+						"-ResultAction": "ImportUninstallT-Plan_7.5",
+						"-EndScript": "false"
+					}
+				}
+			}
+		}
+	}
+}
