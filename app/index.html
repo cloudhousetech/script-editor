@@ -13,13 +13,19 @@
 		<h1>script-editor</h1>
 	</div>
 	<div class="container-fluid">
-		<script-editor params='script: script'> </script-editor>
+		<settings-editor params='script: script'> </script-editor>
+		
 	</div>
+	<div class="container-fluid">
+	<actions-view params='script: script'> </actions-view>
+	</div>
+	<script src="../bower_components/lodash/dist/lodash.min.js"></script>
 	<script src="../bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	
 	<script src="../bower_components/knockout/dist/knockout.js"></script>
-	<script src="components/script-editor/script-editor.js"></script>
+	<script src="components/settings-editor/settings-editor.js"></script>
+	<script src="components/actions-view/actions-view.js"></script>
 	<script src="main.js"></script>
 </body>
 </html>

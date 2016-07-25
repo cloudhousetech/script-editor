@@ -1,4 +1,4 @@
-ko.components.register('script-editor', {
+ko.components.register('settings-editor', {
     viewModel: function(params) {
 		var self=this;
 
@@ -21,7 +21,8 @@ ko.components.register('script-editor', {
         
     },
     template: 
-	'<h1>Settings</h1><form>'
+	'<h1>Settings</h1>'
++	'<form>'
 +	'<div class="form-group"><button type="button" class="btn btn-primary" aria-controls="postponedUpdateSettings" data-toggle="collapse" autocomplete="off" data-target="#postponedUpdateSettings" data-bind="click: togglePostponedUpdateAllowed, attr: {\'aria-expanded\': postponedUpdateAllowed}, text: postponedUpdateAllowed() ? \'Postponed Update Allowed\': \'Postponed Update Not Allowed\'"></button></div>'
 +	'<div class="collapse" id="postponedUpdateSettings">'
 +	'<div class="form-group"><label for="postponedUpdateMaxTries">PostponedUpdateMaxTries:</label> <input id="postponedUpdateMaxTries" class="form-control" type="text" data-bind="value: postponedUpdateMaxTries" /></div> '
