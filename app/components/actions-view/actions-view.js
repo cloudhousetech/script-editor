@@ -26,25 +26,55 @@ ko.components.register('actions-view', {
 					action.Results = [];
 				}
 				
-				allActions.push(_.merge({type: type, id: action['-Id'], userMessage: action['-UserMessage']}, action))
+				_.each(action.Results, function(result) {
+					
+					if (result._ResultAction == "" && result._EndScript) {
+						result.goodend = true;
+						result.badend = false;
+						result.noend = false;
+					}
+					if (result._ResultAction == ""&& !result._EndScript) {
+						result.badend = true;
+						result.goodend = false;
+						result.noend = false;
+					}
+					if (result._ResultAction != "") {
+						result.noend = true;
+						result.badend = false;
+						result.goodend = false;
+					}
+				});
+				
+				allActions.push(_.merge({type: type, id: action['_Id'], userMessage: action['_UserMessage']}, action))
 			}
 			
 			self.actions(allActions);
 		});
     },
     template: 	'<h1>Actions</h1>'
-+	'<ul class="list-unstyled" data-bind="foreach: actions, as:action">'
-+		'<li class="well">'
-+		'<h2><span data-bind="text: id"></span><span>   </span><small data-bind="text: type"></small><span>   </span><small data-bind="text: userMessage"></small></h2>'
-+		'<h4>Results</h4>'
-+			'<div class="form-horizontal" data-bind="foreach: Results">'
-+				'<div class="form-group">'
-+					'<label class="control-label col-sm-3" data-bind="text: $data[\'-ResultText\']"> </label>'
-+					'<div class="col-sm-6">'
-+						'<p class="form-control-static" data-bind="text: $data[\'-ResultAction\']"></p>'
++	'<div class="list-unstyled" data-bind="foreach: actions, as:action">'
++		'<div class="panel panel-primary">'
++     	'<div class="panel-heading">'
++			'<h3><span data-bind="text: id"></span></h3>'
++		'</div>'
++			'<div class="panel-body">'
++				'<span data-bind="text: type"></span><span>   </span><h4>Results</h4>'
++					'<div class="row">'
++						'<div class="col-md-1">'
++						'</div>'
++						'<label class="col-md-3" >Result Text</label>'
++						'<label class="col-md-3" >Result Action</label>'
++					'</div>'
++				'<div class="" data-bind="foreach: Results">'
++					'<div class="row">'
++						'<div class="col-md-1">'
++							'<label class="glyphicon" data-bind="css: {\'glyphicon-play-circle\': noend, \'glyphicon-ok\': goodend, \'glyphicon-remove\': badend}"></label>'
++						'</div>'
++						'<label class="col-md-3" data-bind="text: $data[\'_ResultText\']"> </label>'
++						'<label class="col-md-3" data-bind="text: $data[\'_ResultAction\']"></label>'
 +					'</div>'
 +				'</div>'
 +			'</div>'
-+		'</li>'
-+	'</ul>'
++		'</div>'
++	'</div>'
 });
