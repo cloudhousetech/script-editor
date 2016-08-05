@@ -1,52 +1,39 @@
 <!doctype html5>
 
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="IE=edge">
-	<title>script-editor</title>
-	<link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="../bower_components/knockout-file-bindings/knockout-file-bindings.css" rel="stylesheet">
-</head>
-
-<body>
-	<div class="container">
-		<h1>script-editor</h1>
-	</div>
-	<div class="container-fluid" data-bind="fileDrag: fileData">
-		<div class="form-inline">
-			<div class="form-group">
-				<label for="key">Key</label>
-				<input type="text" id="key" class="form-control" placeholder="Enter Key" data-bind="value: key">
-			</div>
-			<div class="form-group">
-				<label for="iv">IV</label>
-				<input type="text" id="iv" class="form-control" placeholder="Enter IV" data-bind="value: iv">
-			</div>
-			<div class="form-group">
-				<label for="file">Config</label>
-				<input type="file" id="file" class="form-control" placeholder="No config chosen" data-bind="fileInput: fileData, , customFileInput: {}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="IE=edge">
+		<title>script-editor</title>
+		<link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../bower_components/knockout-file-bindings/knockout-file-bindings.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container">
+			<h1>script-editor</h1>
+		</div>
+		<div class="container-fluid" data-bind="fileDrag: fileData">
+			<div class="form-inline">
+				<div class="form-group">
+					<label for="key">Key</label>
+					<input type="text" id="key" class="form-control" placeholder="Enter Key" data-bind="value: key">
+				</div>
+				<div class="form-group">
+					<label for="iv">IV</label>
+					<input type="text" id="iv" class="form-control" placeholder="Enter IV" data-bind="value: iv">
+				</div>
+				<div class="form-group">
+					<label for="file">Config</label>
+					<input type="file" id="file" class="form-control" placeholder="No config chosen" data-bind="fileInput: fileData, , customFileInput: {}">
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="container-fluid">
-		<settings-editor params='script: script'> </script-editor>
-		
-	</div>
-	<div class="container-fluid">
-	<actions-view params='script: script'> </actions-view>
-	</div>
-	<script src="../bower_components/abdmob/x2js/xml2json.min.js"></script>
-	<script src="../bower_components/crypto-js/crypto-js.js"></script>
-	<script src="../bower_components/lodash/dist/lodash.min.js"></script>
-	<script src="../bower_components/jquery/dist/jquery.min.js"></script>
-	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="../bower_components/knockout/dist/knockout.js"></script>
-	<script src="../bower_components/knockout-mapping/knockout.mapping.js"></script>
-	<script src="../bower_components/knockout-file-bindings/knockout-file-bindings.js"></script>
-	
-	<script src="components/settings-editor/settings-editor.js"></script>
-	<script src="components/actions-view/actions-view.js"></script>
-	<script src="main.js"></script>
-</body>
+		<div class="container-fluid">
+			<settings-editor params='script: script'></settings-editor>
+		</div>
+		<div class="container-fluid">
+			<actions-view params='script: script'></actions-view>
+		</div>
+		<script data-main="main.js" src="../node_modules/requirejs/require.js"></script>
+	</body>
 </html>

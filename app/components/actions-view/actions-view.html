@@ -1,0 +1,35 @@
+<h1>Actions</h1>
+<div class="list-unstyled" data-bind="foreach: actions, as:action">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3>
+				<span data-bind="text: id"/>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<span data-bind="text: type"/>
+			<span>   </span>
+			<div class="col-md-4">
+				<h4>Results</h4>
+				<table class="table ">
+					<tr>
+						<th>End of Script?</th>
+						<th>Result Text</th>
+						<th>Result Action</th>
+					</tr>
+					<!-- ko foreach: Results -->
+					<tr>
+						<td>
+							<label class="glyphicon" data-bind="css: {'glyphicon-play-circle': noend, 'glyphicon-ok': goodend, 'glyphicon-remove': badend}"/>
+						</td>
+						<td  data-bind="text: $data['_ResultText']">
+						</td>
+						<td data-bind="text: $data['_ResultAction']">
+						</td>
+					</tr>
+					<!-- /ko -->
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

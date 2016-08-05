@@ -1,0 +1,21 @@
+{
+  "name": "script-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "crypto-js": "^3.1.6",
+    "jquery": "^3.1.0",
+    "knockout": "^3.4.0",
+    "knockout-mapping": "^2.6.0",
+    "lodash": "^4.14.1",
+    "text": "github:requirejs/text",
+    "x2js": "github:abdmob/x2js"
+  }
+}
